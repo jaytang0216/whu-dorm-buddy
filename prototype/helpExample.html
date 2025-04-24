@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>互助信息详情 - WHU 宿舍小助手</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        /* 导航栏样式 */
+        .navbar {
+            background-color: #4CAF50;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        .nav-links li {
+            margin-left: 20px;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: #e9e9e9;
+        }
+        /* 主体内容样式 */
+        .main-content {
+            margin-top: 30px;
+        }
+        .section-title {
+            font-size: 22px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #4CAF50;
+            color: #4CAF50;
+        }
+        /* 互助信息详情样式 */
+        .help-detail-container {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .help-header {
+            margin-bottom: 30px;
+        }
+        .help-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .help-meta {
+            display: flex;
+            margin-bottom: 15px;
+            color: #777;
+            font-size: 14px;
+        }
+        .help-meta div {
+            margin-right: 20px;
+        }
+        .help-status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .status-active {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        .status-completed {
+            background-color: #e3f2fd;
+            color: #1565c0;
+        }
+        .help-content {
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        .help-content h3 {
+            margin-bottom: 10px;
+            color: #4CAF50;
+        }
+        .help-participants {
+            margin-bottom: 20px;
+        }
+        .participants-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #4CAF50;
+        }
+        .participants-list {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .participant {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+            margin-bottom: 10px;
+        }
+        .participant-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .help-comments {
+            margin-top: 30px;
+        }
+        .comments-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #4CAF50;
+        }
+        .comment {
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .comment-author {
+            font-weight: bold;
+        }
+        .comment-date {
+            color: #777;
+            font-size: 12px;
+        }
+        .comment-form {
+            margin-top: 20px;
+        }
+        .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+            min-height: 100px;
+            margin-bottom: 10px;
+        }
+        .comment-form button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .comment-form button:hover {
+            background-color: #45a049;
+        }
+        .help-actions {
+            margin-top: 30px;
+        }
+        .join-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .join-button:hover {
+            background-color: #45a049;
+        }
+        .contact-button {
+            padding: 10px 20px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-left: 10px;
+        }
+        .contact-button:hover {
+            background-color: #1976D2;
+        }
+        /* 页脚样式 */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+            margin-top: 30px;
+        }
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+        }
+        .footer-section {
+            flex: 1;
+            padding: 0 20px;
+        }
+        .footer-section h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .footer-section ul {
+            list-style: none;
+        }
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+        }
+        .footer-section a:hover {
+            color: white;
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #444;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">WHU 宿舍小助手</div>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="items.html">物品共享</a></li>
+                <li><a href="help.html">互助信息</a></li>
+                <li><a href="announcements.html">公告通知</a></li>
+                <li><a href="user.html">个人中心</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主体内容 -->
+    <div class="container main-content">
+        <h1 class="section-title">互助信息详情</h1>
+
+        <!-- 互助信息详情 -->
+        <div class="help-detail-container">
+            <div class="help-header">
+                <h2 class="help-title">今晚外卖顺带</h2>
+                <div class="help-meta">
+                    <div>发布者：王五</div>
+                    <div>发布时间：2025-04-10</div>
+                    <div>互助类型：外卖互助</div>
+                </div>
+                <div class="help-status status-active">状态：进行中</div>
+            </div>
+            <div class="help-content">
+                <h3>互助详情</h3>
+                <p>今晚 7 点订外卖，可以顺带帮带一份。需要的同学请尽快联系我，地址：A 栋 301 宿舍。</p>
+                <h3>具体要求</h3>
+                <p>1. 请提前告知想要的菜品。</p>
+                <p>2. 需要平摊配送费。</p>
+                <h3>截止时间</h3>
+                <p>2025-04-10 18:00</p>
+            </div>
+            <div class="help-participants">
+                <h3 class="participants-title">参与人员（2/5）</h3>
+                <div class="participants-list">
+                    <div class="participant">
+                        <img src="https://via.placeholder.com/40" alt="参与者头像" class="participant-avatar">
+                        <span>王五（发布者）</span>
+                    </div>
+                    <div class="participant">
+                        <img src="https://via.placeholder.com/40" alt="参与者头像" class="participant-avatar">
+                        <span>李四</span>
+                    </div>
+                </div>
+            </div>
+            <div class="help-comments">
+                <h3 class="comments-title">评论（2）</h3>
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="comment-author">李四</span>
+                        <span class="comment-date">2025-04-10 15:30</span>
+                    </div>
+                    <p>我也想订一份，麻烦带一份黄焖鸡米饭。</p>
+                </div>
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="comment-author">王五</span>
+                        <span class="comment-date">2025-04-10 15:35</span>
+                    </div>
+                    <p>@李四 好的，已记录。</p>
+                </div>
+                <div class="comment-form">
+                    <textarea placeholder="发表评论..."></textarea>
+                    <button type="button">提交评论</button>
+                </div>
+            </div>
+            <div class="help-actions">
+                <button class="join-button">我要参与</button>
+                <button class="contact-button">联系发布者</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <ul>
+                        <li><a href="#">项目介绍</a></li>
+                        <li><a href="#">团队成员</a></li>
+                        <li><a href="#">联系方式</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>帮助中心</h3>
+                    <ul>
+                        <li><a href="#">使用指南</a></li>
+                        <li><a href="#">常见问题</a></li>
+                        <li><a href="#">意见反馈</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>联系方式</h3>
+                    <ul>
+                        <li><a href="#">邮箱：example@mail.com</a></li>
+                        <li><a href="#">电话：123-456-7890</a></li>
+                        <li><a href="#">地址：武汉大学</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 WHU 宿舍小助手 版权所有</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
